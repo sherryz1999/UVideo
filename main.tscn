@@ -180,3 +180,17 @@ theme_override_colors/default_color = Color(1, 1, 1, 1)
 bbcode_enabled = true
 fit_content = true
 scroll_following = true
+
+[node name="HistRow" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HistLabel" type="Label" parent="Margin/VBox/HistRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+text = "History:"
+vertical_alignment = 1
+
+[node name="HistoryOpt" type="OptionButton" parent="Margin/VBox/HistRow"]
+layout_mode = 2
+size_flags_horizontal = 3
