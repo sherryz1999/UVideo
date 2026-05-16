@@ -1,0 +1,6 @@
+selenium>=4.0
+webdriver-manager>=4.0
+undetected-chromedriver>=3.5
+yt-dlp>=2024.9.27
+imageio-ffmpeg>=0.4
+cryptography>=3.0

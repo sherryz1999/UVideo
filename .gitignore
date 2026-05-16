@@ -1,0 +1,17 @@
+# Cookies / credentials
+www.youtube.com_cookies.json
+www.youtube.com_cookies.txt
+
+# Logs
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Godot editor files
+.godot/
+
+# clips output
+clips/
