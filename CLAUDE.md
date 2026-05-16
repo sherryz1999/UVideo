@@ -1,6 +1,6 @@
-# YouTube Ad Skipper
+# CueLoop
 
-A YouTube video player that auto-detects and skips advertisements using browser automation, with two frontends: a Python CLI and a Godot 4 GUI.
+CueLoop — download orchestra performance sections from YouTube for loop practice. Two frontends: a Python CLI and a Godot 4 GUI.
 
 ## Project structure
 

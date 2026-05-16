@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-YouTube player with automatic ad skipping via browser automation.
+CueLoop — download orchestra performance sections from YouTube for loop practice.
 
 Requirements:
     pip install selenium webdriver-manager
@@ -731,7 +731,7 @@ def record_clip(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Play a YouTube video URL with automatic ad skipping."
+        description="CueLoop — download orchestra performance sections from YouTube for loop practice."
     )
     parser.add_argument("url", nargs="?", help="YouTube video URL")
     parser.add_argument("--status-file", default="", dest="status_file",
