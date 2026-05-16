@@ -10,12 +10,10 @@ extends Control
 @onready var status_dot  : ColorRect     = $Margin/VBox/StatusRow/DotWrap/StatusDot
 @onready var status_lbl  : Label         = $Margin/VBox/StatusRow/StatusLbl
 @onready var log_box     : RichTextLabel = $Margin/VBox/Scroll/LogBox
-@onready var history_opt : OptionButton  = $Margin/VBox/HistRow/HistoryOpt
 @onready var progress_bar : ProgressBar  = $Margin/VBox/ProgressBar
 
 var process_pid     : int    = -1
 var status_file     : String = ""
-var history         : Array  = []
 var prev_state      : String = ""
 var poll_timer      : Timer
 var chrome_profiles : Array  = []  # parallel array of profile dir names
@@ -40,10 +38,7 @@ func _ready() -> void:
 	play_btn.connect("pressed", _on_play)
 	stop_btn.connect("pressed", _on_stop)
 	record_btn.connect("pressed", _on_record)
-	history_opt.connect("item_selected", _on_history_selected)
-	history_opt.add_item("— no history yet —")
-
-	_load_chrome_profiles()
+_load_chrome_profiles()
 
 	poll_timer = Timer.new()
 	poll_timer.wait_time = 0.5
@@ -170,12 +165,6 @@ func _on_play() -> void:
 	_log("Browser launched (PID %d)." % process_pid)
 	poll_timer.start()
 
-	if url not in history:
-		history.append(url)
-		if history.size() == 1:
-			history_opt.clear()
-		history_opt.add_item(url)
-
 func _on_record() -> void:
 	var url   := url_input.text.strip_edges()
 	var start := start_input.text.strip_edges()
@@ -235,9 +224,6 @@ func _on_stop() -> void:
 	_set_busy(false)
 	progress_bar.visible = false
 	progress_bar.value   = 0.0
-
-func _on_history_selected(index: int) -> void:
-	url_input.text = history_opt.get_item_text(index)
 
 # ── Polling ────────────────────────────────────────────────────────────────────
 func _poll() -> void:
