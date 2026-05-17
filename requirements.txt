@@ -4,3 +4,4 @@ undetected-chromedriver>=3.5
 yt-dlp>=2024.9.27
 imageio-ffmpeg>=0.4
 cryptography>=3.0
+python-vlc>=3.0
