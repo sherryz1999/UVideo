@@ -11,6 +11,27 @@ import sys
 import os
 import tkinter as tk
 from tkinter import filedialog
+
+# Auto-locate VLC on Windows before importing python-vlc bindings
+if sys.platform == "win32":
+    _vlc_candidates = [
+        r"C:\Program Files\VideoLAN\VLC",
+        r"C:\Program Files (x86)\VideoLAN\VLC",
+        os.path.join(os.environ.get("LOCALAPPDATA", ""), "Programs", "VideoLAN", "VLC"),
+    ]
+    for _d in _vlc_candidates:
+        if os.path.isfile(os.path.join(_d, "libvlc.dll")):
+            os.environ.setdefault("PYTHON_VLC_LIB_PATH", os.path.join(_d, "libvlc.dll"))
+            os.environ["PATH"] = _d + os.pathsep + os.environ.get("PATH", "")
+            try:
+                os.add_dll_directory(_d)
+            except AttributeError:
+                pass
+            break
+    else:
+        print("ERROR: VLC not found. Install it from https://www.videolan.org")
+        sys.exit(1)
+
 import vlc
 
 SPEEDS = [0.10, 0.25, 0.50, 0.75, 0.90, 1.00]
