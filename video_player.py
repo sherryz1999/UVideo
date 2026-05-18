@@ -56,6 +56,7 @@ class VideoPlayer:
         self.player   = self.instance.media_player_new()
         self.current_speed = 1.0
         self._seeking      = False
+        self._loop         = False
 
         self._build_ui()
         self._poll()
@@ -98,9 +99,11 @@ class VideoPlayer:
         row1.pack(pady=(4, 2))
 
         self.play_btn = self._btn(row1, "▶  Play",   self._toggle_play)
+        self.loop_btn = self._btn(row1, "⟳  Loop",   self._toggle_loop)
         self._btn(row1, "Open File…", self._open_file)
 
         self.play_btn.pack(side=tk.LEFT, padx=4)
+        self.loop_btn.pack(side=tk.LEFT, padx=4)
         list(row1.children.values())[-1].pack(side=tk.LEFT, padx=4)
 
         # Speed buttons row
@@ -173,6 +176,10 @@ class VideoPlayer:
             self.player.set_rate(self.current_speed)
             self.play_btn.config(text="⏸  Pause")
 
+    def _toggle_loop(self):
+        self._loop = not self._loop
+        self.loop_btn.config(bg=BTN_ACT if self._loop else BTN)
+
     def _set_speed(self, speed):
         self.current_speed = speed
         self.player.set_rate(speed)
@@ -205,7 +212,12 @@ class VideoPlayer:
 
             state = self.player.get_state()
             if state in (vlc.State.Ended, vlc.State.Stopped):
-                self.play_btn.config(text="▶  Play")
+                if self._loop and state == vlc.State.Ended:
+                    self.player.set_position(0)
+                    self.player.play()
+                    self.player.set_rate(self.current_speed)
+                else:
+                    self.play_btn.config(text="▶  Play")
 
         self.root.after(200, self._poll)
 
